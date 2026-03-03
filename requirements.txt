@@ -1,0 +1,18 @@
+# Fireworks AI 自动注册工具依赖
+# Python 3.10+
+
+# 浏览器自动化
+undetected-chromedriver>=3.5.0
+selenium>=4.15.0
+
+# HTTP 请求
+requests>=2.31.0
+urllib3>=2.0.0
+
+# 工具
+python-dotenv>=1.0.0
+setuptools>=70.0.0  # Python 3.12+ 需要
+
+# 可选：测试
+pytest>=7.4.0
+pytest-html>=4.1.0
