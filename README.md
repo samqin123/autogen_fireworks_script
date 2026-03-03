@@ -7,8 +7,8 @@
 
 ## ✨ 特性
 
-- **多源邮箱自动切换** - SamfunAsia → Primary → Mail.tm，失败自动切换
-- **浏览器自动化** - ChromeDriver 145 适配，支持本地缓存和自动下载
+- **多源邮箱自动切换** - 支持多种临时邮箱服务，失败自动切换
+- **浏览器自动化** - ChromeDriver 适配，支持本地缓存和自动下载
 - **完整注册流程** - 注册 → 验证 → 入门引导 → API Key 创建
 - **人机模拟** - 随机延迟、自然输入，降低风控检测
 - **错误重试** - 浏览器崩溃自动重启，网络错误自动重试
@@ -20,30 +20,15 @@
 
 ### 1. 克隆项目
 ```bash
-git clone <repository-url>
-cd fireworks_auto_register
+git clone https://github.com/samqin123/autogen_fireworks_script.git
+cd autogen_fireworks_script
 ```
 
 ### 2. 安装依赖
 
-#### 方法 A: 使用 pip（标准方式）
 ```bash
 pip install -r requirements.txt
 ```
-
-#### 方法 B: 使用 uv（推荐，速度极快）
-```bash
-# 创建虚拟环境（Python 3.12）
-uv venv --python python3.12
-
-# 激活环境
-source .venv/bin/activate
-
-# 安装依赖
-uv pip install -r requirements.txt
-```
-
-**uv 优势**: 比 pip 快 10-100 倍，支持全局缓存
 
 ### 依赖列表
 - `undetected-chromedriver>=3.5.0` - 浏览器自动化
@@ -52,7 +37,7 @@ uv pip install -r requirements.txt
 - `python-dotenv>=1.0.0` - 环境变量（可选）
 
 ### 3. 准备 ChromeDriver（可选）
-项目已内置 ChromeDriver 145 缓存，位于 `.chromedriver_cache/`。
+项目已内置 ChromeDriver 缓存，位于 `.chromedriver_cache/`。
 
 如需手动下载：
 ```bash
@@ -91,8 +76,6 @@ python main.py --help
 | `--headless` | 无头模式 | False |
 | `--skip-onboarding` | 跳过入门引导 | False |
 | `--skip-apikey` | 跳过 API Key 创建 | False |
-| `--primary-url` | 主邮箱服务 URL | "" |
-| `--primary-key` | 主邮箱服务 API Key | "" |
 
 ### 示例
 
@@ -102,9 +85,6 @@ python main.py -n 10 --retry 5
 
 # 仅注册，跳过问卷和 API Key
 python main.py -n 1 --skip-onboarding --skip-apikey
-
-# 使用自定义邮箱服务
-python main.py -n 1 --primary-url "https://mail.example.com" --primary-key "xxx"
 ```
 
 ---
@@ -112,10 +92,10 @@ python main.py -n 1 --primary-url "https://mail.example.com" --primary-key "xxx"
 ## 📁 项目结构
 
 ```
-fireworks_auto_register/
+autogen_fireworks_script/
 ├── core/                           # 核心模块
 │   ├── __init__.py
-│   ├── browser_manager.py          # 浏览器管理（ChromeDriver 145）
+│   ├── browser_manager.py          # 浏览器管理
 │   └── email_service.py            # 邮箱服务（多源自动切换）
 │
 ├── services/                       # 业务服务
@@ -131,20 +111,13 @@ fireworks_auto_register/
 │   ├── http_client.py              # HTTP 工具
 │   └── file_handler.py             # 文件处理
 │
-├── tests/                          # 测试用例
-│   ├── __init__.py
-│   └── test_flows.py               # 单元测试
-│
-├── output/                         # 输出目录
-│   └── fireworks_YYYYMMDD.txt      # 结果文件
-│
 ├── .chromedriver_cache/            # ChromeDriver 缓存
 │   └── chromedriver-145
 │
 ├── main.py                         # 主入口
 ├── requirements.txt                # 依赖列表
-├── README.md                       # 本文件
-└── DEVELOPMENT_LOG.md              # 开发日志
+├── .gitignore                      # Git 忽略文件
+└── README.md                       # 本文件
 ```
 
 ---
@@ -156,11 +129,8 @@ fireworks_auto_register/
 编辑 `utils/config.py`：
 
 ```python
-# SamfunAsia 配置（主要邮箱服务）
-SAMFUN_ASIA_BASE = "https://cloudflare_temp_email.caiql20022000.workers.dev"
-SAMFUN_ASIA_ADMIN_AUTH = "xiaoyibao@1234"
-
-# Mail.tm 配置（备用邮箱服务）
+# 邮箱服务配置
+SAMFUN_ASIA_BASE = "https://cloudflare_temp_email.xxx.workers.dev"
 MAIL_TM_BASE = "https://api.mail.tm"
 ```
 
@@ -186,41 +156,22 @@ BETWEEN_ACCOUNTS = 30         # 账号间间隔（秒）
 
 ## 📊 输出结果
 
-注册成功后，结果保存到 `output/fireworks_YYYYMMDD.txt`：
+注册成功后，结果将输出到控制台：
 
 ```
 Fireworks AI 账号注册结果
-生成时间: 2026-02-28 18:37:12
 ==================================================
 
   项目         验证结果
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  邮箱         silverwave704@samfun.asia
-  密码         abj!Lo8vU&bZA@1N
+  邮箱         example@domain.com
+  密码         xxxxxxxxxxxxxxxx
   API Key      fw_xxxxxxxxxxxxxxxx
-  Account ID   silverwave704-xxxxx
+  Account ID   xxxxxx-xxxxx
 
-  注册时间: 2026-02-28 18:37:12
+  注册时间: 2026-03-03 10:00:00
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
-
----
-
-## 🧪 测试
-
-### 运行单元测试
-```bash
-python -m pytest tests/test_flows.py -v
-```
-
-### 测试覆盖
-- ✅ 密码生成器（符合复杂度要求）
-- ✅ 邮箱服务（SamfunAsia、Mail.tm）
-- ✅ 邮箱管理器（优先级切换）
-- ✅ 姓名生成器
-- ✅ 问卷选项
-- ✅ 文件处理器
-- ✅ 日志工具
 
 ---
 
@@ -237,23 +188,11 @@ chmod +x .chromedriver_cache/chromedriver-145
 
 ### Q: 邮箱服务不可用？
 - 检查网络连接
-- SamfunAsia 偶尔会有 SSL 问题，会自动切换到备用邮箱服务
+- 系统会自动切换到备用邮箱服务
 
-### Q: 验证链接获取失败？
-- 可能是邮件延迟，可以增加 `VERIFY_EMAIL_TIMEOUT`
-- 检查邮箱服务是否正常
-
-### Q: ModuleNotFoundError: No module named 'urllib3'?
-系统有多个 Python 版本，请使用以下方法之一：
-
+### Q: ModuleNotFoundError?
 ```bash
-# 方法1: 使用 Python 3.10 明确运行
-/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 main.py -n 1
-
-# 方法2: 为当前 Python 安装依赖
-python3 -m pip install urllib3 selenium undetected-chromedriver requests
-
-# 方法3: 创建虚拟环境（推荐）
+# 创建虚拟环境（推荐）
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -264,13 +203,14 @@ python main.py -n 1
 
 ## 📝 更新日志
 
-### v1.0.0 (2026-02-28)
+### v1.0.0 (2026-03-03)
 - ✅ 完整注册流程实现
 - ✅ 多源邮箱自动切换
-- ✅ ChromeDriver 145 适配
+- ✅ ChromeDriver 适配
 - ✅ 入门引导和 API Key 创建
 - ✅ 浏览器优雅退出
 - ✅ 账号间隔默认 30s
+- ✅ 代码安全清理，移除敏感信息
 
 ---
 
@@ -292,4 +232,5 @@ MIT License
 ---
 
 **作者**: AI Assistant  
-**最后更新**: 2026-02-28
+**仓库**: https://github.com/samqin123/autogen_fireworks_script  
+**最后更新**: 2026-03-03

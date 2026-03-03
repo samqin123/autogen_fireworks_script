@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+run_log.txt
+
+# Output & Data
+output/
+*.txt
+!requirements.txt
+!README.md
+
+# Debug Files
+debug_*.png
+*_error.png
+check_inputs.png
+signin_error.png
+
+# Cache
+.chromedriver_cache/*
+!.chromedriver_cache/.gitkeep
+.cache/
+.pytest_cache/
+
+# Test Files
+test_*.json
+temp_*.json
+verification_link.txt
+
+# Documentation (dev only)
+*_design.md
+*_framework.md
+DEVELOPMENT_LOG.md
+EMAIL_SERVICE_GUIDE.md
+API_KEY_VERIFICATION_REPORT.md
